@@ -1,18 +1,27 @@
-import { Link } from "react-router-dom"; // Use Link for navigation
+import { Link } from "react-router-dom";
 import { Heading } from "./components/heading/Heading";
-import { Img } from "./components/img/Img"; 
-import React from "react";
-
+import { Img } from "./components/img/Img";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ ...props }) {
+    const [orderMenuOpen, setOrderMenuOpen] = useState(false); // State to toggle submenu
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+        window.location.reload();
+    };
+
     return (
         <header
             {...props}
-            className={`${props.className} flex sm:flex-col self-stretch justify-between items-center gap-5`} // Fixed string interpolation
+            className={`${props.className} flex sm:flex-col self-stretch justify-between items-center gap-5`}
         >
             <ul className="flex flex-wrap items-center gap-7">
                 <li>
-                    <a href="#" className="lg:text-[30px] md:text-[30px] sm:text-[28px]"> {/* Corrected class names */}
+                    <a href="#" className="lg:text-[30px] md:text-[30px] sm:text-[28px]">
                         <Heading size="texts" as="p" className="text-[36px] font-medium tracking-[-0.79px] text-gray-700">
                             Menu
                         </Heading>
@@ -26,24 +35,45 @@ export default function Header({ ...props }) {
                     </a>
                 </li>
                 <li>
-                    <a href="./Order" className="lg:text-[17px]">
+                    {/* Toggle "Ordre" submenu */}
+                    <button onClick={() => setOrderMenuOpen(!orderMenuOpen)} className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
                             Ordre
                         </Heading>
-                    </a>
+                    </button>
+                    {orderMenuOpen && (
+                        <ul className="mt-2 space-y-1">
+                            <li>
+                                <Link to="/order" className="text-[18px] text-gray-700">
+                                    Opret Ordre
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/ViewOrders" className="text-[18px] text-gray-700">
+                                    Se Ordre
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
                 <li>
                     <a href="./Review" className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
-                        Swinging the penis
+                            Stjerner
+                        </Heading>
+                    </a>
+                </li>
+                <li>
+                    <a href="./Calendar" className="lg:text-[17px]">
+                        <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
+                            Kalender
                         </Heading>
                     </a>
                 </li>
             </ul>
-            <a href="#">
-                <Img src="images/img_thumbs_up.png" alt="Thumbs Up Image" className="h-[24px] w-[24px] sm:w-full" /> {/* Used Img component */}
-            </a>
+            <button shape="round" className="ml-[134px] min-w-[126px] rounded px-[30px] tracking-[-0.44px] sm:ml-0 sm:px-4" onClick={handleLogout}>
+                Log ud
+            </button>
         </header>
     );
 }
-

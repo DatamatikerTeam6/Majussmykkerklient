@@ -74,6 +74,45 @@ body {
 }
 
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+.calendar {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.calendar-header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+.calendar-header h2 {
+    margin: 0;
+}
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #fff;
+}
+.day {
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+    height: 80px;
+}
+.day-name {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+
 
 
 

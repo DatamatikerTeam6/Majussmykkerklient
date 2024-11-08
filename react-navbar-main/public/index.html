@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost:7187; script-src 'self'; 
+    style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <meta charset="utf-8" />
     <link rel="icon" href="/Images/MajusSmykker_Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,8 +19,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
+      Notice the use of %PUBLIC_URL% in the tags above.j
       Only files inside the `public` folder can be referenced from the HTML.
 
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
