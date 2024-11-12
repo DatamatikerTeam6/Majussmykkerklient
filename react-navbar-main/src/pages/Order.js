@@ -1,15 +1,31 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Button } from "../components/button/Button";
 import { Heading } from "../components/heading/Heading";
 import Customer from "./Customer";
 
 export default function Order() {
-  // State variables for the input fields and loading/error handling
-  
-  
+  const [price, setPrice] = useState();
+  const [name, setName] = useState("");
+  const [type, setType] = useState();
+  const [deliveryDate, setDeliveryDate] = useState("");
+  const [orderDate, setOrderDate] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [note, setNote] = useState("");
+  const [pickupplace, setPickupPlace] = useState();
+  const [pickupplaceasstring, setPickupPlaceasstring] = useState();
+  const [delivered, setDelivered] = useState(false);
+  const [images, setImages] = useState([]);  // Store multiple files here
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [customerID, setCustomerID] = useState("");
+  const [showCustomer, setShowCustomer] = useState(false);
+
+  const handleFileChange = (e) => {
+    setImages(e.target.files);  // Update state with multiple files
+  };
+
   useEffect(() => {
-    
     const fetchCustomerID = async () => {
       try {
         const response = await fetch("https://localhost:7187/api/Customer/numberofspaces", {
@@ -18,127 +34,92 @@ export default function Order() {
             "Content-Type": "application/json",
           },
         });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        const currentCustomerID = data.count; // Access the count property from the response
-        console.log("Number of customers:", currentCustomerID);
-        setCustomerID(currentCustomerID); // Set the customerID state
+        setCustomerID(data.count);
       } catch (error) {
         console.error("Error fetching customer count:", error);
         setErrorMessage("Failed to fetch customer count.");
       }
     };
 
-    fetchCustomerID(); // Call the function when the component mounts
-  }, []); // Empty dependency array means this effect runs once on mount
+    fetchCustomerID();
+  }, []);
 
-  
-
-  const [price, setPrice] = useState();
-  const [name, setName] = useState("")
-  const [type, setType] = useState();
-  const [deliveryDate, setDeliveryDate] = useState("");
-  const [orderDate, setOrderDate] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [note, setNote] = useState("");
-  const [pickupplace, setPickupPlace] = useState(); 
-  const [pickupplaceasstring, setPickupPlaceasstring] = useState(); 
-  const [delivered, setDelivered] = useState(false);
-  const [image, setImage] = useState("Penis");
-  const [loading, setLoading] = useState(false); // Loading state
-  const [errorMessage, setErrorMessage] = useState("");
-  const [customerID, setCustomerID] = useState(""); // Initialize to null
-  const [showCustomer, setShowCustomer] = useState(false); // State to handle checkbox
-
-
-   
   const createOrder = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     setLoading(true);
-    setErrorMessage(""); // Reset error message before submission
-  
-    
-      const orderData = {
-      price, 
-      name, 
-      type, 
-      deliveryDate, 
-      orderDate, 
-      quantity, 
-      note, 
-      pickupplace, 
-      pickupplaceasstring, 
-      delivered, 
-      image, 
-      customerID
-    };
-  
-    console.log(JSON.stringify(orderData, null, 2)); // Pretty print JSON for debugging
+    setErrorMessage("");
 
-      // Replace the empty object with the actual data to be sent
+    const formData = new FormData();
+    formData.append("price", price);
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("deliveryDate", deliveryDate);
+    formData.append("orderDate", orderDate);
+    formData.append("quantity", quantity);
+    formData.append("note", note);
+    formData.append("pickupplace", pickupplace);
+    formData.append("pickupplaceasstring", pickupplaceasstring);
+    formData.append("delivered", delivered);    
+    formData.append("customerID", customerID);
+    
+    // Append each image to formData
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append("files", images[i]);
+      }
+    }
+    console.log(formData)
+    try {
       const response = await fetch("https://localhost:7187/api/Order/CreateOrder", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          price,
-          name,  // Brug den encodede version
-          type,
-          deliveryDate,
-          orderDate,
-          quantity,
-          note,  // Brug den encodede version
-          pickupplace,
-          pickupplaceasstring,
-          delivered,
-          image,  // Brug den encodede version
-          customerID,
-        }), // Add password or other fields as needed
+        body: formData,
+      });
 
-      });    
-      console.log(response)
-      if(response.ok)
-        {
-         alert("Kunde er blevet oprettet som en luder")
-         window.location.reload();
-        }
-  };  
+      if (response.ok) {
+        alert("Order created successfully!");
+        window.location.reload();
+      } else {
+        const text = await response.text();
+        console.log('Response Text:', text);
+        setErrorMessage("Failed to create order.");
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      setErrorMessage("An error occurred while creating the order.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  
-// Function to update pickupplace and pickupplaceasstring
-const handlePickupPlaceChange = (e) => {
-  const selectedPickupPlace = e.target.value;
-  setPickupPlace(selectedPickupPlace);
+  const handlePickupPlaceChange = (e) => {
+    const selectedPickupPlace = e.target.value;
+    setPickupPlace(selectedPickupPlace);
 
-  // Map the numeric value of pickupplace to the corresponding string
-  let placeString = "";
-  switch (selectedPickupPlace) {
-    case "0":
-      placeString = "Butik";
-      break;
-    case "1":
-      placeString = "Hjemme";
-      break;
-    case "2":
-      placeString = "Post";
-      break;
-    default:
-      placeString = "";
-  }
+    // Map the numeric value of pickupplace to the corresponding string
+    let placeString = "";
+    switch (selectedPickupPlace) {
+      case "0":
+        placeString = "Butik";
+        break;
+      case "1":
+        placeString = "Hjemme";
+        break;
+      case "2":
+        placeString = "Post";
+        break;
+      default:
+        placeString = "";
+    }
 
-  // Update the pickupplaceasstring based on the selected pickupplace
-  setPickupPlaceasstring(placeString);
-};
+    setPickupPlaceasstring(placeString);
+  };
 
-
-const handleCheckboxChange = (e) => {
-  setShowCustomer(e.target.checked); // Update showCustomer state based on checkbox
-};
+  const handleCheckboxChange = (e) => {
+    setShowCustomer(e.target.checked);
+  };
 
   return (
     <>
@@ -295,17 +276,14 @@ const handleCheckboxChange = (e) => {
             </div>
 
             <div className="flex flex-col items-start justify-center">
-              <Heading as="h1" className="text-[20px] font-medium tracking-[-0.22px] text-black-900 lg:text-[17px]">
-                Billede
-              </Heading>
+              <label>Billeder</label>
               <input
-                type="text"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                type="file"
+                multiple
+                onChange={handleFileChange}
                 className="w-[22%] rounded !border px-3"
                 required
               />
-
             </div>
 
             <div className="flex flex-col items-start justify-center">

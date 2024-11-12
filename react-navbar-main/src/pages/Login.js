@@ -56,8 +56,10 @@ export default function LoginPage() {
         setErrorMessage(`Forkert email eller kodeord. Fejl: ${errorData.message || "Ukendt fejl"}`);
       }
     } catch (error) {
+      
       console.error("Login fejl:", error);
-      setErrorMessage("En fejl opstod. Prøv igen.");
+      setErrorMessage(`En fejl opstod under OTP-verifikation. Fejl: ${error.message || "Ukendt fejl"}`);
+      
     } finally {
       setLoading(false);
     }
