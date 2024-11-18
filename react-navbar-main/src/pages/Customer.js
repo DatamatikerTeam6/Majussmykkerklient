@@ -11,7 +11,7 @@ export default function Customer() {
   const [address, setAddress] = useState("");
   const [telephoneNumber, setTelephoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [customerNote, setcustomerNote] = useState("");
+  const [customerNote, setCustomerNote] = useState("");
   const [activeCustomer, setActiveCustomer] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,7 +27,7 @@ export default function Customer() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ customerID, nameCustomer, telephoneNumber, address, email, customerNote, activeCustomer}), // Add password or other fields as needed
+        body: JSON.stringify({ nameCustomer, telephoneNumber, address, email, customerNote, activeCustomer}), // Add password or other fields as needed
       });    
       
       if(response.ok)
@@ -104,7 +104,7 @@ export default function Customer() {
               <input
                 type="text"
                 value={customerNote}
-                onChange={(e) => setcustomerNote(e.target.value)}
+                onChange={(e) => setCustomerNote(e.target.value)}
                 className="w-[22%] rounded !border px-3"
                 required
               />

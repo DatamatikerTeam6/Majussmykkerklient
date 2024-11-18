@@ -1,8 +1,8 @@
 
 /* Import font */
 @font-face {
-  font-family: 'Aptos Light';
-  src: './Fonts/aptos-light.ttf' format('truetype');
+  font-family: 'LibreFranklinMedium';
+  src: './Fonts/LibreFranklinMedium.ttf' format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-body {
+.body {
   margin: 0;
   background-color: #f5f5f5;
   font-family: 'Aptos Light', Aptos, sans-serif; 
@@ -73,13 +73,6 @@ body {
   align-items: center;
 }
 
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
 .calendar {
     display: inline-block;
     border: 1px solid #ccc;
@@ -112,7 +105,104 @@ body {
     font-weight: bold;
 }
 
+.delete-button {
+  background-color: #8B0000;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin: 5px;
+}
 
 
 
+.search {
+  width: 71%;
+  margin: 4rem 0 2rem;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.5rem; /* Gør knappen lidt mindre */
+  border-radius: 3rem;
+  background: white; /* Baggrundsfarven ændres til hvid */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Mindre og lettere skygge */
+
+  /* Ændrer tekstfarven til sort */
+  color: black;
+}
+
+.search input {
+  flex: 1;
+  border: none;
+  font-size: 1.5rem;
+  font-family: var(--font-raleway);
+  font-weight: 500;
+  padding-right: 1rem;
+
+  outline: none;
+  color: #333; /* Sort tekstfarve i input */
+  background: white; /* Baggrundsfarven i input ændres til hvid */
+}
+
+
+
+.search img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.navbarItem {
+  font-family: LibreFranklinMedium, serif;
+ font-size: 17px;
+}
+
+.create-button {
+  background-color: #BAEAF4;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  border: 2px solid #73aab68f ; /* Adds a black border */
+
+  /* Synlig skygge med stærkere effekt */
+  box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.5); /* Større, mørkere skygge */
+  transition: box-shadow 0.3s ease; /* Glidende overgang, når skyggen ændres */
+}
+
+.create-button:hover {
+  box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.6); /* Forstærket skygge ved hover */
+}
+
+.update-button {
+  background-color: #BAEAF4;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds some space between the icon and the text */
+  
+}
+
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds some space between the icon and the text */
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 40px;
+}
+
+.delete-icon {
+  width: 20px; /* Adjust image size */
+  height: 20px; /* Adjust image size */
+}

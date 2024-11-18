@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Heading } from "./components/heading/Heading";
-import { Img } from "./components/img/Img";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +14,7 @@ export default function Header({ ...props }) {
     };
 
     return (
+       
         <header
             {...props}
             className={`${props.className} flex sm:flex-col self-stretch justify-between items-center gap-5`}
@@ -28,34 +28,19 @@ export default function Header({ ...props }) {
                     </a>
                 </li>
                 <li>
-                    <a href="./Customer" className="lg:text-[17px]">
+                    <a href="./ViewCustomers" className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
                             Kunder
                         </Heading>
                     </a>
-                </li>
+                </li>      
                 <li>
-                    {/* Toggle "Ordre" submenu */}
-                    <button onClick={() => setOrderMenuOpen(!orderMenuOpen)} className="lg:text-[17px]">
+                    <a href="./ViewOrders" className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
                             Ordre
                         </Heading>
-                    </button>
-                    {orderMenuOpen && (
-                        <ul className="mt-2 space-y-1">
-                            <li>
-                                <Link to="/order" className="text-[18px] text-gray-700">
-                                    Opret Ordre
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/ViewOrders" className="text-[18px] text-gray-700">
-                                    Se Ordre
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
-                </li>
+                    </a>
+                </li>             
                 <li>
                     <a href="./Review" className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
@@ -71,9 +56,15 @@ export default function Header({ ...props }) {
                     </a>
                 </li>
             </ul>
-            <button shape="round" className="ml-[134px] min-w-[126px] rounded px-[30px] tracking-[-0.44px] sm:ml-0 sm:px-4" onClick={handleLogout}>
+            <button
+                onClick={handleLogout}
+                className="ml-[134px] min-w-[126px] rounded px-[30px] py-[10px] text-gray-700 font-medium tracking-[-0.44px] sm:ml-0 sm:px-4 sm:py-2 hover:bg-gray-200 transition duration-200"
+            >
                 Log ud
             </button>
         </header>
+       
+        
+        
     );
 }
