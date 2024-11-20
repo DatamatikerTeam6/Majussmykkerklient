@@ -32,6 +32,7 @@ export default function ViewOrders() {
             const response = await fetch(url);
             const data = await response.json();
             setOrders(data);
+            console.log(data)
         } catch (error) {
             console.error("Error fetching orders:", error);
         }
@@ -106,6 +107,8 @@ export default function ViewOrders() {
                                 <p><strong>Mængde:</strong> {order.quantity}</p>
                                 <p><strong>Ordredato:</strong> {new Date(order.orderdate).toISOString().split("T")[0]}</p>
                                 <p><strong>Afhentningsdato:</strong> {new Date(order.deliverydate).toISOString().split("T")[0]}</p>
+                                <p><strong>AfhentningsTidspunkt:</strong> {order.deliveryTime}</p>
+                                <p><strong>OrderID:</strong> {order.orderid}</p>
                                 <img src={order.image} width="150" height="150" alt={order.name} />
                                 <div className="mt-2 flex justify-between">
                                     <button className="delete-button" onClick={() => handleDeleteClick(order.name)}>

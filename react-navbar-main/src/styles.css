@@ -11,15 +11,23 @@
   box-sizing: border-box;
 }
 
+
+
 .body {
   margin: 0;
   background-color: #f5f5f5;
   font-family: 'Aptos Light', Aptos, sans-serif; 
+  overflow-wrap: break-word; /* Prevents text from overflowing */
+  overflow: hidden; /* Prevents overflowing text */
+
 }
 
 .container {
   margin: 1rem;
+  text-overflow: clip;
   text-align: center;
+  overflow-wrap: break-word; /* Prevents text from overflowing */
+  overflow: hidden; /* Prevents overflowing text */
 }
 
 .nav {
@@ -34,6 +42,7 @@
   display: flex;
   align-items: center;
   padding: 10px;
+  overflow-wrap: break-word; /* Prevents text from overflowing */
 }
 
 .site-title {
@@ -112,6 +121,7 @@
   border-radius: 5px;
   margin-top: 10px;
   margin: 5px;
+  width: 100px;
 }
 
 
@@ -189,9 +199,22 @@
   display: flex;
   align-items: center;
   gap: 8px; /* Adds some space between the icon and the text */
+  width: 100px;
   
 }
 
+.select-button {
+  background-color: #BAEAF4;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds some space between the icon and the text */
+  width: 100px;
+  
+}
 
 .delete-button {
   display: flex;
@@ -205,4 +228,11 @@
 .delete-icon {
   width: 20px; /* Adjust image size */
   height: 20px; /* Adjust image size */
+}
+
+
+.orderCustomerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px;
 }

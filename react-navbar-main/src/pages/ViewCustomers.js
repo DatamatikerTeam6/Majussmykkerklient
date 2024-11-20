@@ -8,7 +8,7 @@ export default function ViewCustomers() {
     const [customers, setCustomers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');        
     const navigate = useNavigate();
-    const [customerID, setCustomerID] = useState("");
+    /*const [customerID, setCustomerID] = useState("");*/
 
  
 
@@ -57,6 +57,12 @@ export default function ViewCustomers() {
         navigate("/UpdateCustomer", { state: { customer } });
     };
 
+     // Handle update order button click
+     const handleSelectClick = (customer) => {
+        navigate("/Order", { state: { customer } });
+        window.location.reload();
+    };
+
     // Call fetchOrders after every keystroke (with debounce for efficiency)
     const handleSearchChange = (e) => {
         const newSearchTerm = e.target.value;
@@ -88,7 +94,7 @@ export default function ViewCustomers() {
                 {customers.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {customers.map((customer) => (
-                            <div key={customer.customerName} className="p-4 border rounded shadow flex flex-col items-start">
+                            <div key={customer.customerName} className="p-4 border rounded shadow flex flex-col">
                                 <p><strong>Navn:</strong> {customer.nameCustomer}</p>
                                 <p><strong>Telefon:</strong> {customer.telephoneNumber}</p>
                                 <p><strong>Adresse:</strong> {customer.address}</p>
@@ -98,7 +104,7 @@ export default function ViewCustomers() {
 
                                {/* <p><strong>Aktiv?:</strong> {customer.Active? "Ja" : "Nej"}</p> */}
 
-                                <div className="mt-2 flex justify-between">
+                                <div className="p-4 border rounded shadow flex flex-col">
                                     <button className="delete-button" onClick={() => deleteCustomer(customer.customerID)}>
                                         <img src="./Images/Trash2.png" alt="Delete" className="delete-icon" />
                                         Slet
@@ -106,6 +112,10 @@ export default function ViewCustomers() {
                                     <button className="update-button" onClick={() => handleUpdateClick(customer)}>
                                         <img src="./Images/Edit.png" alt="Edit" className="delete-icon" />
                                         Redigér
+                                    </button>
+                                    <button className="select-button" onClick={() => handleSelectClick(customer)}>
+                                        <img src="./Images/Pointer.png" alt="Edit" className="delete-icon" />
+                                        Vælg
                                     </button>
                                 </div>
                             </div>

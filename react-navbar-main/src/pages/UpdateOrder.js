@@ -25,41 +25,20 @@ export default function UpdateOrder() {
   const [pickupplaceasstring, setPickupPlaceasstring] = useState(order?.pickupplaceasstring);
   const [delivered, setDelivered] = useState(order?.delivered || false);
   const [images, setImages] = useState(order?.images || []);  // Store multiple files here
-  
+  const [orderID, setOrderID] = useState(order?.orderid || []); 
+
+
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [customerID, setCustomerID] = useState("");
+  const [customerID, setCustomerID] = useState(order?.customerid || 0);
   const [showCustomer, setShowCustomer] = useState(false);
 
   const handleFileChange = (e) => {
     setImages(e.target.files);  // Update state with multiple files
   };
 
-  useEffect(() => {
+
     
-
-
-    const fetchCustomerID = async () => {
-      try {
-        const response = await fetch("https://localhost:7187/api/Customer/numberofspaces", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) throw new Error("Network response was not ok");
-
-        const data = await response.json();
-        setCustomerID(data.count);
-      } catch (error) {
-        console.error("Error fetching customer count:", error);
-        setErrorMessage("Failed to fetch customer count.");
-      }
-    };
-
-    fetchCustomerID();
-  }, []);
-
   const createOrder = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -77,6 +56,7 @@ export default function UpdateOrder() {
     formData.append("pickupplaceasstring", pickupplaceasstring);
     formData.append("delivered", delivered);    
     formData.append("customerID", customerID);
+    formData.append("orderid", orderID);
     
     // Append each image to formData
     if (images) {
@@ -90,18 +70,18 @@ export default function UpdateOrder() {
         method: "PUT",
         body: formData,
       });
-
+      
       if (response.ok) {
-        alert("Order created successfully!");
+        alert("Ordren blev opdateret succesfuldt!");
         window.location.reload();
       } else {
         const text = await response.text();
         console.log('Response Text:', text);
-        setErrorMessage(`${text} Failed to create order.`);
+        setErrorMessage(`${text} Fejl, kunne ikke opdatere ordre.`);
       }
     } catch (error) {
       console.error("Error creating order:", error);
-      setErrorMessage("An error occurred while creating the order.");
+      setErrorMessage("En fejl opstod - ordren kunne ikke opdateres.");
     } finally {
       setLoading(false);
     }
@@ -117,14 +97,14 @@ export default function UpdateOrder() {
 
 
       <Helmet>
-        <title>Order Details - Manage Your Contacts Efficiently</title>
+        <title>Opdater ordre</title>
         <meta
           name="description"
           content="Access customer details including orders, calendar, telephoneNumber, address, email, and notes. Save and manage your contacts with ease."
         />
       </Helmet>
 
-      <h1>Odpater ordre</h1>
+      <h1><strong>Opdater ordre</strong></h1>
       <div className="flex w-full flex-col items-center gap-[366px] bg-white-a700 lg:gap-[274px] md:gap-[274px] sm:gap-[183px]">
         <div className="mx-auto mb-1 flex w-full max-w-[1836px] flex-col items-start gap-[50px] self-stretch px-5 md:px-5">
           <form onSubmit={createOrder} className="flex flex-col gap-[22px] self-stretch">
@@ -272,11 +252,11 @@ export default function UpdateOrder() {
 
             <div className="flex flex-col items-start justify-center">
   <Heading as="h1" className="text-[20px] font-medium tracking-[-0.22px] text-black-900 lg:text-[17px]">
-    CustomerID
+    OrderID
   </Heading>
   <input
     type="text"
-    value={customerID}
+    value={orderID}
     className="w-[22%] rounded !border px-3"
   />
 </div>
