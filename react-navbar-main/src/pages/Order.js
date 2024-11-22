@@ -61,8 +61,9 @@ export default function Order() {
 
   
 
-const createOrder = async () => {
+const createOrder = async (event) => {
   
+  event.preventDefault();
   setLoading(true);
   setErrorMessage("");
 
@@ -309,8 +310,7 @@ const createOrder = async () => {
                   type="checkbox"
                   value={delivered}
                   onChange={(e) => setDelivered(e.target.checked)}
-                  className="w-[8%] rounded !border px-3"
-                  required
+                  className="w-[8%] rounded !border px-3"                
                   style={{ height: "40px" }} // Inline style for height
                 />
               </div>
@@ -363,7 +363,7 @@ const createOrder = async () => {
     </div>
 
        <div class="col-1">
-        <ViewCustomers />
+        <ViewCustomers isChecked={true} />
        </div>
           </div>
 

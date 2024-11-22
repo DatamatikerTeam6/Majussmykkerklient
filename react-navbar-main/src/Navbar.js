@@ -37,7 +37,7 @@ export default function Header({ ...props }) {
                 <li>
                     <a href="./ViewOrders" className="lg:text-[17px]">
                         <Heading as="p" className="text-[20px] font-medium tracking-[-0.44px] text-gray-700">
-                            Ordre
+                            Ordrer
                         </Heading>
                     </a>
                 </li>             

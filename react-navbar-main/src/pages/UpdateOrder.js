@@ -16,12 +16,12 @@ export default function UpdateOrder() {
 
   const [price, setPrice] = useState(order?.price || "");
   const [name, setName] = useState(order?.name) || "";
-  const [type, setType] = useState(order?.type || "");
+  const [type, setType] = useState(order?.type || 0);
   const [deliveryDate, setDeliveryDate] = useState(formatDate(order.deliverydate) || "");
   const [orderDate, setOrderDate] = useState(formatDate(order.orderdate) || "");
   const [quantity, setQuantity] = useState(order?.quantity || "");
   const [note, setNote] = useState(order?.note || "");
-  const [pickupplace, setPickupPlace] = useState(order?.pickupplace || "");
+  const [pickupplace, setPickupPlace] = useState(order?.pickupplace || 0);
   const [pickupplaceasstring, setPickupPlaceasstring] = useState(order?.pickupplaceasstring);
   const [delivered, setDelivered] = useState(order?.delivered || false);
   const [images, setImages] = useState(order?.images || []);  // Store multiple files here
@@ -37,7 +37,7 @@ export default function UpdateOrder() {
     setImages(e.target.files);  // Update state with multiple files
   };
 
-
+console.log(order)
     
   const createOrder = async (event) => {
     event.preventDefault();
@@ -233,7 +233,7 @@ export default function UpdateOrder() {
               </Heading>
               <input
                 type="checkbox"
-                value={delivered}
+                checked={delivered}
                 onChange={(e) => setDelivered(e.target.checked)}
                 className="w-[22%] rounded !border px-3"
                 style={{ height: "40px" }} // Inline style for height
@@ -250,7 +250,7 @@ export default function UpdateOrder() {
               />
             </div>
 
-            <div className="flex flex-col items-start justify-center">
+            <div style={{ display: "none" }} className="flex flex-col items-start justify-center">
   <Heading as="h1" className="text-[20px] font-medium tracking-[-0.22px] text-black-900 lg:text-[17px]">
     OrderID
   </Heading>

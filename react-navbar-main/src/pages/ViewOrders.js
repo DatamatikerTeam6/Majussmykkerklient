@@ -82,7 +82,7 @@ export default function ViewOrders() {
         <>
             <div className="search">
                 <input 
-                    placeholder="Søg efter ordre"
+                    placeholder="Søg efter ordre..."
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
@@ -94,7 +94,7 @@ export default function ViewOrders() {
             </div>
 
             <div className="p-5">
-                <h1 className="text-2xl font-bold mb-4">Ordreoversigt</h1>
+                <h1 className="text-2xl font-bold mb-4">Ordre oversigt</h1>
                 {orders.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {orders.map((order) => (
@@ -107,8 +107,7 @@ export default function ViewOrders() {
                                 <p><strong>Mængde:</strong> {order.quantity}</p>
                                 <p><strong>Ordredato:</strong> {new Date(order.orderdate).toISOString().split("T")[0]}</p>
                                 <p><strong>Afhentningsdato:</strong> {new Date(order.deliverydate).toISOString().split("T")[0]}</p>
-                                <p><strong>AfhentningsTidspunkt:</strong> {order.deliveryTime}</p>
-                                <p><strong>OrderID:</strong> {order.orderid}</p>
+                                <p><strong>Afhentningstidspunkt:</strong> {order.deliveryTime}</p>                                
                                 <img src={order.image} width="150" height="150" alt={order.name} />
                                 <div className="mt-2 flex justify-between">
                                     <button className="delete-button" onClick={() => handleDeleteClick(order.name)}>

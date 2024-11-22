@@ -43,7 +43,7 @@ console.log(customer)
       
       if(response.ok)
         {
-         alert("Kunde blev opdateret")
+         alert("Kunden blev opdateret succesfuldt!")
          window.location.reload();
         }
   };
@@ -56,7 +56,7 @@ console.log(customer)
 
 
       <Helmet>
-        <title>Kundeoversigt</title>
+        <title>Opdater kunde</title>
         <meta
           name="description"
           content="Få adgang til kunde informationer, inklusive ordrer, kalender, telefonnummer, adresse, email og noter."
@@ -105,7 +105,7 @@ console.log(customer)
               />
 </div>
           
-<div className="flex flex-col items-start justify-center">
+<div style={{ display: "none" }} className="flex flex-col items-start justify-center">
               <Heading as="h1" className="text-[20px] font-medium tracking-[-0.22px] text-black-900 lg:text-[17px]">
                 CustomerID
               </Heading>

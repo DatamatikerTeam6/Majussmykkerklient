@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "../components/button/Button";
 import { Heading } from "../components/heading/Heading";
 
-export default function Customer( { isCustomerButtonVisible, createOrder } ) {
+export default function Customer( { isChecked, isCustomerButtonVisible, createOrder } ) {
   // State variables for the input fields and loading/error handling
   
   const [customerID, setCustomerID] = useState("");
@@ -15,7 +15,7 @@ export default function Customer( { isCustomerButtonVisible, createOrder } ) {
   const [activeCustomer, setActiveCustomer] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
  
 
@@ -38,7 +38,7 @@ export default function Customer( { isCustomerButtonVisible, createOrder } ) {
     if (response.ok) {
       alert("Kunden er blevet oprettet i systemet!");
       if (isCustomerButtonVisible) {
-        createOrder(); // Create order if the second button is visible
+        createOrder(event); // Create order if the second button is visible
       } else {
         window.location.reload(); // Reload page after customer creation
       }
@@ -128,8 +128,7 @@ export default function Customer( { isCustomerButtonVisible, createOrder } ) {
               Opret kunde
             </Button>
             <Button  
-              type="submit"           
-                        
+              type="submit"      
               shape="round"
               style={{ display: isCustomerButtonVisible ?   "block" : "none" }}  
               className="w-[90%] rounded !border px-3"
